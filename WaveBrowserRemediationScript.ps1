@@ -4,16 +4,20 @@ Function intro {
                 Remediation script for WaveBrowser Software previously known as WebNavigator.
     
             .DESCRIPTION
-                The script will stop browser session, remove files, scheduled tasks and registry keys associated with WebBrowser.
+                The script will first scan and log WaveBrowser artifacts.
+                Prompt user to then stop browser session, remove files, scheduled tasks and registry keys associated with WebBrowser.
             .EXAMPLE
-                It's an automated script, just run the script :P
+                Run the script to scan and choose to remove the artifacts.
     
                 Description
                 -----------
+                Scans for WaveBrowser artifacts.
+                Prompts user to remove items found in scan.
                 Kills any browser sessions.
                 Removes registry keys associated with Wave Browser Hijacking Software.
                 Removes files associated with Wave Browser Hijacking Software.
                 Removes the scheduled tasks associated with Wave Browser.
+                Orginally sourced from https://github.com/xephora/Threat-Remediation-Scripts/blob/main/WaveBrowser/WaveBrowser-Remediation-Script.ps1
         #>
 
     }
