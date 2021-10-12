@@ -4,20 +4,16 @@ Function intro {
                 Remediation script for WaveBrowser Software previously known as WebNavigator.
     
             .DESCRIPTION
-                The script will first scan and log WaveBrowser artifacts.
-                Prompt user to then stop browser session, remove files, scheduled tasks and registry keys associated with WebBrowser.
+                The script will stop browser session, remove files, scheduled tasks and registry keys associated with WebBrowser.
             .EXAMPLE
-                Run the script to scan and choose to remove the artifacts.
+                It's an automated script, just run the script :P
     
                 Description
                 -----------
-                Scans for WaveBrowser artifacts.
-                Prompts user to remove items found in scan.
                 Kills any browser sessions.
                 Removes registry keys associated with Wave Browser Hijacking Software.
                 Removes files associated with Wave Browser Hijacking Software.
                 Removes the scheduled tasks associated with Wave Browser.
-                Orginally sourced from https://github.com/xephora/Threat-Remediation-Scripts/blob/main/WaveBrowser/WaveBrowser-Remediation-Script.ps1
         #>
 
     }
@@ -29,7 +25,7 @@ Function CheckBrowserProcesses {
     Get-Process iexplore -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process msedge -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process SWUpdater -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
-    Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
+	Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
 }
 
 Function CheckWavesorFS {
@@ -82,6 +78,34 @@ Function CheckRegistryKey {
 	}
 }
 	
+Function CheckUsersRegistryKey {
+	$users = (Get-ChildItem -path c:\users).name
+	foreach($user in $users)
+	{
+	reg load "hku\$user" "C:\Users\$user\NTUSER.DAT"
+
+	$dir = "key_users\$user\Software\Clients\StartMenuInternet\wave*.*",
+			"key_users\$user\Software\Microsoft\Windows\CurrentVersion\App Paths\wavebrowser.exe",
+			"key_users\$user\Software\Wavesor",
+			"key_users\$user\Software\Wavesor\SWUpdater",
+			"key_users\$user\Software\Microsoft\Windows\CurrentVersion\run\Wavesor*.*"
+			
+		foreach ($path in $dir)
+		{    
+		if(($item = Get-Item -Path $path -ErrorAction SilentlyContinue)) {
+		$item,$path,"Path exists" | Out-File -filePath $filePath -Append
+	} else {
+		$item,$path,"Path does not exist`n" | Out-File -filePath $filePath -Append
+		   }
+		}
+
+
+	reg unload "hku\$user"
+
+	}
+}
+
+
 Function BrowserProcesses {
 	"Stopping Browser Sessions"
 
@@ -147,6 +171,35 @@ Function RemoveRegistryKey {
 	}
 }	
 
+Function RemoveUsersRegistryKey {
+	$users = (Get-ChildItem -path c:\users).name
+	foreach($user in $users)
+	{
+	reg load "hku\$user" "C:\Users\$user\NTUSER.DAT"
+
+	$dir = "key_users\$user\Software\Clients\StartMenuInternet\wave*.*",
+			"key_users\$user\Software\Microsoft\Windows\CurrentVersion\App Paths\wavebrowser.exe",
+			"key_users\$user\Software\Wavesor",
+			"key_users\$user\Software\Wavesor\SWUpdater",
+			"key_users\$user\Software\Microsoft\Windows\CurrentVersion\run\Wavesor*.*"
+			
+		foreach ($path in $dir)
+		{    
+		if(($item = Get-Item -Path $path -ErrorAction SilentlyContinue)) {
+		$item,$path,"Attempting removal" | Out-File -filePath $filePath -Append
+		Remove-Item -Path $path -Force -ErrorAction SilentlyContinue
+	} else {
+		$item,$path,"Path does not exist`n" | Out-File -filePath $filePath -Append
+		   }
+		}
+
+
+	reg unload "hku\$user"
+
+	}
+}
+
+<#------------------------------------------------------------------------#>
 
 $filePath = "C:\temp\waveScan.txt"
 $titleScan = 'Would you like to scan for the Wave Browser on this host'
@@ -160,6 +213,8 @@ CheckBrowserProcesses
 CheckWavesorFS
 CheckScheduledTasks
 CheckRegistryKey
+CheckUsersRegistryKey
+
 Write-Output "`nPrinting log file to:",$filePath
 
 $titleClean    = 'Would you like to remediate the Wave Browser on this host'
