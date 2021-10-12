@@ -12,7 +12,6 @@ Function intro {
                 Description
                 -----------
                 Scans for WaveBrowser artifacts.
-		Orginally sourced from https://github.com/xephora/Threat-Remediation-Scripts/blob/main/WaveBrowser/WaveBrowser-Remediation-Script.ps1
 
 
         #>
@@ -26,7 +25,7 @@ Function CheckBrowserProcesses {
     Get-Process iexplore -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process msedge -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process SWUpdater -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
-    Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
+	Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
 }
 
 Function CheckWavesorFS {
@@ -78,13 +77,14 @@ Function CheckRegistryKey {
     $item,$path,"Path does not exist`n" | Out-File -filePath $filePath -Append
 	   }
 	}
+	"`n**************Scan Complete**************`n" | Out-File -filePath $filePath -Append
 }
 	
 
 
 <#------------------------------------------------------------------------#>
 
-$filePath = "C:\temp\waveScan.txt"
+$filePath = "C:\waveScan.txt"
 
 CheckBrowserProcesses
 CheckWavesorFS
