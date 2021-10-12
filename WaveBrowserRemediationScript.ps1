@@ -32,8 +32,13 @@ Function CheckBrowserProcesses {
 }
 
 Function CheckWavesorFS {
-	"Checking WaveBrowser Files"
-	$dir = "$env:USERPROFILE\Wavesor Software","$env:USERPROFILE\WebNavigatorBrowser","$env:USERPROFILE\appdata\local\WaveBrowser","$env:USERPROFILE\appdata\local\WebNavigatorBrowser","$env:USERPROFILE\downloads\Wave Browser*.exe"
+	"Checks file path for instances of Wave malware"
+	$dir = "$env:USERPROFILE\Wavesor Software",
+	"$env:USERPROFILE\WebNavigatorBrowser",
+	"$env:USERPROFILE\appdata\local\WaveBrowser",
+	"$env:USERPROFILE\appdata\local\WebNavigatorBrowser",
+	"$env:USERPROFILE\downloads\Wave Browser*.exe"
+	
 	foreach ($path in $dir)
 	{    
     if(($item = Get-Item -Path $path -ErrorAction SilentlyContinue)) {
@@ -54,9 +59,13 @@ Function CheckScheduledTasks {
 }
 
 Function CheckRegistryKey {
-    "Checking Registry Keys.."
+    "Checks registry keys for instances of Wave malware"
     
-		$dir = "HKCU:\Software\WaveBrowser","HKCU:\Software\Wavesor","HKCU:\Software\WebNavigatorBrowser","HKCU\Software\Microsoft\Windows\CurrentVersion\Run.Wavesor SWUpdater"
+		$dir = "HKCU:\Software\WaveBrowser",
+		"HKCU:\Software\Wavesor",
+		"HKCU:\Software\WebNavigatorBrowser",
+		"HKCU\Software\Microsoft\Windows\CurrentVersion\Run.Wavesor SWUpdater"
+		
 	foreach ($path in $dir)
 	{    
     if(($item = Get-Item -Path $path -ErrorAction SilentlyContinue)) {
@@ -81,7 +90,12 @@ Function RemoveWavesorFS {
 	"Cleaning WaveBrowser Files"
 	
 	
-		$dir = "$env:USERPROFILE\Wavesor Software","$env:USERPROFILE\WebNavigatorBrowser","$env:USERPROFILE\appdata\local\WaveBrowser","$env:USERPROFILE\appdata\local\WebNavigatorBrowser","$env:USERPROFILE\downloads\Wave Browser*.exe"
+		$dir = "$env:USERPROFILE\Wavesor Software",
+		"$env:USERPROFILE\WebNavigatorBrowser",
+		"$env:USERPROFILE\appdata\local\WaveBrowser",
+		"$env:USERPROFILE\appdata\local\WebNavigatorBrowser",
+		"$env:USERPROFILE\downloads\Wave Browser*.exe"
+		
 	foreach ($path in $dir)
 	{    
     if(($item = Get-Item -Path $path -ErrorAction SilentlyContinue)) {
@@ -103,9 +117,13 @@ Function RemoveScheduledTasks {
 }
 
 Function RemoveRegistryKey {
-	"Cleaning Registry Keys.."
+	"Cleaning Registry Keys."
 	
-		$dir = "HKCU:\Software\WaveBrowser","HKCU:\Software\Wavesor","HKCU:\Software\WebNavigatorBrowser","HKCU\Software\Microsoft\Windows\CurrentVersion\Run.Wavesor SWUpdater"
+		$dir = "HKCU:\Software\WaveBrowser",
+		"HKCU:\Software\Wavesor",
+		"HKCU:\Software\WebNavigatorBrowser",
+		"HKCU\Software\Microsoft\Windows\CurrentVersion\Run.Wavesor SWUpdater"
+		
 	foreach ($path in $dir)
 	{    
     if(($item = Get-Item -Path $path -ErrorAction SilentlyContinue)) {
