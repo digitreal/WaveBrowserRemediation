@@ -108,7 +108,7 @@ Function CheckUsersRegistryKey {
 
 <#------------------------------------------------------------------------#>
 
-$filePath = "C:\temp\waveScan.txt"
+$filePath = "C:\waveScan.txt"
 
 CheckBrowserProcesses
 CheckWavesorFS
