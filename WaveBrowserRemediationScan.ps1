@@ -78,6 +78,7 @@ Function CheckRegistryKey {
 	   }
 	}
 	"`n**************Scan Complete**************`n" | Out-File -filePath $filePath -Append
+	Write-Output "`n**************Scan Complete**************`n"
 }
 	
 
