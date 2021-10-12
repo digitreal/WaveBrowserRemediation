@@ -25,7 +25,7 @@ Function CheckBrowserProcesses {
     Get-Process iexplore -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process msedge -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process SWUpdater -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
-	Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
+    Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
 }
 
 Function CheckWavesorFS {
