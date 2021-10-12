@@ -22,18 +22,19 @@ Function intro {
 
     }
 Function CheckBrowserProcesses {
-    "Checking Browser Sessions"
+<#--- Checks and PRINTS OUT all running browser processes ---#>
 
     Get-Process chrome -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process firefox -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process iexplore -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process msedge -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process SWUpdater -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
-    Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
+	Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
 }
 
 Function CheckWavesorFS {
-	"Checking WaveBrowser Files"
+<#--- Checks and PRINTS OUT all files assigned to $dir ---#>
+
 	$dir = "$env:USERPROFILE\Wavesor Software",
 	"$env:USERPROFILE\WebNavigatorBrowser",
 	"$env:USERPROFILE\appdata\local\WaveBrowser",
@@ -56,7 +57,7 @@ Function CheckWavesorFS {
 }
 
 Function CheckScheduledTasks {
-    "Checking Scheduled Tasks"
+<#--- Checks and PRINTS OUT all scheduled tasks with the name of *wave* ---#>
     
     $tasks = Get-ScheduledTask -TaskName *Wave* | Select-Object -ExpandProperty TaskName
     foreach ($i in $tasks) {
@@ -65,7 +66,7 @@ Function CheckScheduledTasks {
 }
 
 Function CheckRegistryKey {
-    "Checking Registry Keys.."
+<#--- Checks and PRINTS OUT all registry keys assigned to $dir under the current user account ---#>
     
 		$dir = "HKCU:\Software\WaveBrowser",
 		"HKCU:\Software\Wavesor",
@@ -83,6 +84,8 @@ Function CheckRegistryKey {
 }
 	
 Function CheckUsersRegistryKey {
+<#--- Iterates and loads all user accounts' hkey_users and checks and PRINTS OUT all registry keys assigned to $dir ---#>
+	
 	$users = (Get-ChildItem -path c:\users).name
 	foreach($user in $users)
 	{
@@ -102,16 +105,13 @@ Function CheckUsersRegistryKey {
 		$item,$path,"Path does not exist`n" | Out-File -filePath $filePath -Append
 		   }
 		}
-
-
 	reg unload "hku\$user"
 
 	}
 }
 
-
 Function BrowserProcesses {
-	"Stopping Browser Sessions"
+<#--- Checks and STOPS all running browser processes ---#>
 
 	Get-Process chrome -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 	Get-Process firefox -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
@@ -122,8 +122,7 @@ Function BrowserProcesses {
 }
 
 Function RemoveWavesorFS {
-	"Cleaning WaveBrowser Files"
-	
+<#--- Checks and DELETES all files assigned to $dir ---#>
 	
 	$dir = "$env:USERPROFILE\Wavesor Software",
 	"$env:USERPROFILE\WebNavigatorBrowser",
@@ -148,7 +147,7 @@ Function RemoveWavesorFS {
 }
 
 Function RemoveScheduledTasks {
-	"Cleaning Scheduled Tasks"
+<#--- Checks and DELETES all scheduled tasks with the name of *wave* ---#>
 	
 	$tasks = Get-ScheduledTask -TaskName *Wave* | Select-Object -ExpandProperty TaskName
 	foreach ($i in $tasks) {
@@ -157,7 +156,7 @@ Function RemoveScheduledTasks {
 }
 
 Function RemoveRegistryKey {
-	"Cleaning Registry Keys.."
+<#--- Checks and DELETES all registry keys assigned to $dir under the current user account ---#>
 	
 		$dir = "HKCU:\Software\WaveBrowser",
 		"HKCU:\Software\Wavesor",
@@ -176,6 +175,8 @@ Function RemoveRegistryKey {
 }	
 
 Function RemoveUsersRegistryKey {
+<#--- Iterates and loads all user accounts' hkey_users and checks and DELETES all registry keys assigned to $dir ---#>
+	
 	$users = (Get-ChildItem -path c:\users).name
 	foreach($user in $users)
 	{
@@ -196,8 +197,6 @@ Function RemoveUsersRegistryKey {
 		$item,$path,"Path does not exist`n" | Out-File -filePath $filePath -Append
 		   }
 		}
-
-
 	reg unload "hku\$user"
 
 	}
