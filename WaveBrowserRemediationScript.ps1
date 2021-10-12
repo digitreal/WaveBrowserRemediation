@@ -35,13 +35,13 @@ Function CheckBrowserProcesses {
 Function CheckWavesorFS {
 <#--- Checks and PRINTS OUT all files assigned to $dir ---#>
 
-	$dir = "$env:USERPROFILE\Wavesor Software",
-	"$env:USERPROFILE\WebNavigatorBrowser",
-	"$env:USERPROFILE\appdata\local\WaveBrowser",
-	"$env:USERPROFILE\appdata\local\WebNavigatorBrowser",
-	"$env:USERPROFILE\downloads\Wave Browser*.exe",
-	"$env:USERPROFILE\appdata\Roaming\Microsoft\Internet Explorer\Quick Launch\WaveBrowser.lnk",
-	"$env:USERPROFILE\appdata\Roaming\Microsoft\Windows\Start Menu\Programs\WaveBrowser.lnk",
+	$dir = "C:\users\*\Wavesor Software",
+	"C:\users\*\WebNavigatorBrowser",
+	"C:\users\*\appdata\local\WaveBrowser",
+	"C:\users\*\appdata\local\WebNavigatorBrowser",
+	"C:\users\*\downloads\Wave Browser*.exe",
+	"C:\users\*\appdata\Roaming\Microsoft\Internet Explorer\Quick Launch\WaveBrowser.lnk",
+	"C:\users\*\appdata\Roaming\Microsoft\Windows\Start Menu\Programs\WaveBrowser.lnk",
 	"C:\ProgramData\Intel\ShaderCache\wavebrowser*",
 	"C:\Users\All Users\Intel\ShaderCache\wavebrowser*",
 	"C:\Windows\Prefetch\WAVEBROWSER*.*"
@@ -124,13 +124,13 @@ Function BrowserProcesses {
 Function RemoveWavesorFS {
 <#--- Checks and DELETES all files assigned to $dir ---#>
 	
-	$dir = "$env:USERPROFILE\Wavesor Software",
-	"$env:USERPROFILE\WebNavigatorBrowser",
-	"$env:USERPROFILE\appdata\local\WaveBrowser",
-	"$env:USERPROFILE\appdata\local\WebNavigatorBrowser",
-	"$env:USERPROFILE\downloads\Wave Browser*.exe",
-	"$env:USERPROFILE\appdata\Roaming\Microsoft\Internet Explorer\Quick Launch\WaveBrowser.lnk",
-	"$env:USERPROFILE\appdata\Roaming\Microsoft\Windows\Start Menu\Programs\WaveBrowser.lnk",
+	$dir = "C:\users\*\Wavesor Software",
+	"C:\users\*\WebNavigatorBrowser",
+	"C:\users\*\appdata\local\WaveBrowser",
+	"C:\users\*\appdata\local\WebNavigatorBrowser",
+	"C:\users\*\downloads\Wave Browser*.exe",
+	"C:\users\*\appdata\Roaming\Microsoft\Internet Explorer\Quick Launch\WaveBrowser.lnk",
+	"C:\users\*\appdata\Roaming\Microsoft\Windows\Start Menu\Programs\WaveBrowser.lnk",
 	"C:\ProgramData\Intel\ShaderCache\wavebrowser*",
 	"C:\Users\All Users\Intel\ShaderCache\wavebrowser*",
 	"C:\Windows\Prefetch\WAVEBROWSER*.*"
