@@ -12,7 +12,7 @@ Function intro {
                 Description
                 -----------
                 Scans for WaveBrowser artifacts.
-
+                Orginally sourced from https://github.com/xephora/Threat-Remediation-Scripts/blob/main/WaveBrowser/WaveBrowser-Remediation-Script.ps1
 
         #>
 
