@@ -83,6 +83,7 @@ Function RemoveRegistryKey {
     $item,$path,"Path does not exist`n" | Out-File -filePath $filePath -Append
 	   }
 	}
+	"`n**************Removal Complete**************`n" | Out-File -filePath $filePath -Append
 }	
 
 
