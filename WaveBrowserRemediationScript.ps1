@@ -4,20 +4,16 @@ Function intro {
                 Remediation script for WaveBrowser Software previously known as WebNavigator.
     
             .DESCRIPTION
-                The script will first scan and log WaveBrowser artifacts.
-                Prompt user to then stop browser session, remove files, scheduled tasks and registry keys associated with WebBrowser.
+                The script will stop browser session, remove files, scheduled tasks and registry keys associated with WebBrowser.
             .EXAMPLE
-                Run the script to scan and choose to remove the artifacts.
+                It's an automated script, just run the script :P
     
                 Description
                 -----------
-                Scans for WaveBrowser artifacts.
-                Prompts user to remove items found in scan.
                 Kills any browser sessions.
                 Removes registry keys associated with Wave Browser Hijacking Software.
                 Removes files associated with Wave Browser Hijacking Software.
                 Removes the scheduled tasks associated with Wave Browser.
-                Orginally sourced from https://github.com/xephora/Threat-Remediation-Scripts/blob/main/WaveBrowser/WaveBrowser-Remediation-Script.ps1
         #>
 
     }
@@ -29,15 +25,21 @@ Function CheckBrowserProcesses {
     Get-Process iexplore -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process msedge -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
     Get-Process SWUpdater -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
+	Get-Process wavebrowser -ErrorAction SilentlyContinue | Out-File -filePath $filePath -Append
 }
 
 Function CheckWavesorFS {
-	"Checks file path for instances of Wave malware"
+	"Checking WaveBrowser Files"
 	$dir = "$env:USERPROFILE\Wavesor Software",
 	"$env:USERPROFILE\WebNavigatorBrowser",
 	"$env:USERPROFILE\appdata\local\WaveBrowser",
 	"$env:USERPROFILE\appdata\local\WebNavigatorBrowser",
-	"$env:USERPROFILE\downloads\Wave Browser*.exe"
+	"$env:USERPROFILE\downloads\Wave Browser*.exe",
+	"$env:USERPROFILE\appdata\Roaming\Microsoft\Internet Explorer\Quick Launch\WaveBrowser.lnk",
+	"$env:USERPROFILE\appdata\Roaming\Microsoft\Windows\Start Menu\Programs\WaveBrowser.lnk",
+	"C:\ProgramData\Intel\ShaderCache\wavebrowser*",
+	"C:\Users\All Users\Intel\ShaderCache\wavebrowser*",
+	"C:\Windows\Prefetch\WAVEBROWSER*.*"
 	
 	foreach ($path in $dir)
 	{    
@@ -59,7 +61,7 @@ Function CheckScheduledTasks {
 }
 
 Function CheckRegistryKey {
-    "Checks registry keys for instances of Wave malware"
+    "Checking Registry Keys.."
     
 		$dir = "HKCU:\Software\WaveBrowser",
 		"HKCU:\Software\Wavesor",
@@ -84,17 +86,23 @@ Function BrowserProcesses {
 	Get-Process iexplore -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 	Get-Process msedge -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 	Get-Process SWUpdater -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+	Get-Process wavebrowser -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 }
 
 Function RemoveWavesorFS {
 	"Cleaning WaveBrowser Files"
 	
 	
-		$dir = "$env:USERPROFILE\Wavesor Software",
-		"$env:USERPROFILE\WebNavigatorBrowser",
-		"$env:USERPROFILE\appdata\local\WaveBrowser",
-		"$env:USERPROFILE\appdata\local\WebNavigatorBrowser",
-		"$env:USERPROFILE\downloads\Wave Browser*.exe"
+	$dir = "$env:USERPROFILE\Wavesor Software",
+	"$env:USERPROFILE\WebNavigatorBrowser",
+	"$env:USERPROFILE\appdata\local\WaveBrowser",
+	"$env:USERPROFILE\appdata\local\WebNavigatorBrowser",
+	"$env:USERPROFILE\downloads\Wave Browser*.exe",
+	"$env:USERPROFILE\appdata\Roaming\Microsoft\Internet Explorer\Quick Launch\WaveBrowser.lnk",
+	"$env:USERPROFILE\appdata\Roaming\Microsoft\Windows\Start Menu\Programs\WaveBrowser.lnk",
+	"C:\ProgramData\Intel\ShaderCache\wavebrowser*",
+	"C:\Users\All Users\Intel\ShaderCache\wavebrowser*",
+	"C:\Windows\Prefetch\WAVEBROWSER*.*"
 		
 	foreach ($path in $dir)
 	{    
@@ -117,7 +125,7 @@ Function RemoveScheduledTasks {
 }
 
 Function RemoveRegistryKey {
-	"Cleaning Registry Keys."
+	"Cleaning Registry Keys.."
 	
 		$dir = "HKCU:\Software\WaveBrowser",
 		"HKCU:\Software\Wavesor",
